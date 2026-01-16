@@ -1,0 +1,18 @@
+*.iml
+.gradle
+/local.properties
+/.idea/
+.idea/
+.DS_Store
+/build
+**/build/
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+gradle.properties
+
+# Keystore files - NEVER commit these!
+*.keystore
+*.jks
+keystore.properties

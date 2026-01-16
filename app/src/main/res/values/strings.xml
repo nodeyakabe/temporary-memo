@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">一時保存メモ</string>
+    <string name="widget_description">有効なメモを最大3件表示</string>
+</resources>
