@@ -1,0 +1,124 @@
+Temporary Memos - Notes That Disappear by Design
+
+【What is Temporary Memo】
+A simple memo app for managing temporary notes securely.
+Memos are automatically deleted when the set deadline is reached.
+
+Perfect for "temporary passwords," "shopping lists," "daily tasks," and other information you don't want to keep.
+
+━━━━━━━━━━━━━━━━━━━━
+Key Features
+━━━━━━━━━━━━━━━━━━━━
+
+✅ Time-Limited Memos (1 hour ~ 7 days)
+Memos are automatically and completely deleted when the set time expires.
+
+✅ Biometric Lock
+Protect your app with fingerprint or face authentication. No worries about prying eyes.
+
+✅ Screenshot Prevention
+Completely blocks screen capture and recording. Prevents unintended information leaks.
+
+✅ Home Screen Widget
+Display up to 3 active memos on your home screen. Check without opening the app.
+
+✅ Fully Offline
+No internet connection required. No communication, no ads, no tracking.
+
+✅ Simple and Easy to Use
+Intuitive interface lets you start using it right away.
+
+━━━━━━━━━━━━━━━━━━━━
+Perfect For
+━━━━━━━━━━━━━━━━━━━━
+
+📝 Temporary passwords and codes
+🛒 Today's shopping list
+📋 Short-term tasks and to-do lists
+💡 Quick idea notes
+🔐 Information you only need for a few days
+
+━━━━━━━━━━━━━━━━━━━━
+Security & Privacy
+━━━━━━━━━━━━━━━━━━━━
+
+🔒 Data Stored Locally Only
+All data is stored only on your device.
+No cloud sync or external server transmission.
+
+🔒 No Communication, No Tracking
+No INTERNET permission means your data can never be sent externally.
+No analytics tools or ad SDKs used.
+
+🔒 Excluded from Backup
+Set to be excluded from Android backup functionality.
+More secure as data doesn't persist during device changes.
+
+━━━━━━━━━━━━━━━━━━━━
+Important Notice
+━━━━━━━━━━━━━━━━━━━━
+
+This app is intended for simple memo management and does not guarantee complete security.
+
+⚠️ Data is not encrypted
+⚠️ Deleted memos cannot be recovered
+⚠️ Data cannot be transferred during device changes
+
+Do not use for highly sensitive information such as bank accounts, credit card numbers, or critical passwords.
+
+━━━━━━━━━━━━━━━━━━━━
+Why "Temporary Memo"?
+━━━━━━━━━━━━━━━━━━━━
+
+Modern memo apps focus on "permanent storage" of information.
+But not all information needs to be kept long-term.
+
+"Information I only need today"
+"Information that becomes unnecessary in a few hours"
+"Temporary information I don't want to keep"
+
+For such "information that should disappear,"
+Temporary Memo was created.
+
+Automatically deleted when the deadline comes.
+No worries about it remaining, so you can write with peace of mind.
+
+That's the concept of Temporary Memo.
+
+━━━━━━━━━━━━━━━━━━━━
+From the Developer
+━━━━━━━━━━━━━━━━━━━━
+
+"I want to save memos, but I don't want them to remain."
+This app was created to address this contradictory feeling.
+
+Simple, easy to use, and secure.
+I hope this app helps with your temporary information management.
+
+━━━━━━━━━━━━━━━━━━━━
+Support
+━━━━━━━━━━━━━━━━━━━━
+
+If you have any questions or requests,
+please feel free to contact us.
+
+Developer: NatuB
+
+━━━━━━━━━━━━━━━━━━━━
+
+【App Permissions】
+• Biometric (USE_BIOMETRIC): Used for app lock feature
+
+【Supported OS】
+• Android 9.0 and above
+
+【Price】
+• Completely free (no ads, no in-app purchases)
+
+【Data Collection】
+• No personal information is collected
+
+【Contact】
+• Email: yakabe@nodecast.jp
+
+Privacy Policy: https://nodeyakabe.github.io/temporary-memo/privacy_policy.html

@@ -1,0 +1,22 @@
+Initial Release (v1.0.0)
+
+Released "Temporary Memo" - a time-limited memo app!
+
+【Key Features】
+• Time-limited memos (1 hour ~ 7 days)
+• Auto-delete when deadline is reached
+• Privacy protection with biometric authentication
+• Screenshot and screen recording prevention
+• Home screen widget (up to 3 memos)
+• Fully offline (no communication, no ads)
+
+【Security Features】
+• Biometric lock
+• FLAG_SECURE (screen capture prevention)
+• Backup disabled
+• No internet permission
+
+【Important Notice】
+This app is intended for simple memo management and does not guarantee complete security. Data is not encrypted. For sensitive information, please use a dedicated password manager.
+
+Thank you for using our app!

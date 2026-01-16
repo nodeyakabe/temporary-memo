@@ -1,0 +1,1 @@
+Temporary memo app with auto-delete. Secure with biometric authentication.
