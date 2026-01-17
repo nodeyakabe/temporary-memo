@@ -33,9 +33,16 @@ data class MemoEntity(
 
     /**
      * メモの冒頭テキストを取得（最大3行）
+     * 空行のみの場合は適切に処理する
      */
     fun getPreviewText(maxLines: Int = 3): String {
-        val lines = text.lines()
-        return lines.take(maxLines).joinToString("\n")
+        if (text.isBlank()) return "(空のメモ)"
+
+        val lines = text.lines().filter { it.isNotBlank() }
+        return if (lines.isEmpty()) {
+            "(空のメモ)"
+        } else {
+            lines.take(maxLines).joinToString("\n")
+        }
     }
 }

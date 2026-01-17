@@ -1,5 +1,9 @@
 package com.temporary.memo.ui.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -12,6 +16,10 @@ import com.temporary.memo.ui.screens.MemoListScreen
 import com.temporary.memo.ui.screens.SettingsScreen
 import com.temporary.memo.viewmodel.BiometricViewModel
 import com.temporary.memo.viewmodel.MemoViewModel
+import com.temporary.memo.viewmodel.ThemeViewModel
+
+// アニメーション定数
+private const val ANIMATION_DURATION = 300
 
 /**
  * ナビゲーショングラフ
@@ -33,14 +41,47 @@ fun SetupNavGraph(
     navController: NavHostController,
     memoViewModel: MemoViewModel,
     biometricViewModel: BiometricViewModel,
+    themeViewModel: ThemeViewModel,
     startDestination: String
 ) {
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
+        enterTransition = {
+            fadeIn(animationSpec = tween(ANIMATION_DURATION)) +
+            slideIntoContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Start,
+                animationSpec = tween(ANIMATION_DURATION)
+            )
+        },
+        exitTransition = {
+            fadeOut(animationSpec = tween(ANIMATION_DURATION)) +
+            slideOutOfContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Start,
+                animationSpec = tween(ANIMATION_DURATION)
+            )
+        },
+        popEnterTransition = {
+            fadeIn(animationSpec = tween(ANIMATION_DURATION)) +
+            slideIntoContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.End,
+                animationSpec = tween(ANIMATION_DURATION)
+            )
+        },
+        popExitTransition = {
+            fadeOut(animationSpec = tween(ANIMATION_DURATION)) +
+            slideOutOfContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.End,
+                animationSpec = tween(ANIMATION_DURATION)
+            )
+        }
     ) {
         // ロック画面
-        composable(route = Screen.Lock.route) {
+        composable(
+            route = Screen.Lock.route,
+            enterTransition = { fadeIn(animationSpec = tween(ANIMATION_DURATION)) },
+            exitTransition = { fadeOut(animationSpec = tween(ANIMATION_DURATION)) }
+        ) {
             LockScreen(
                 biometricViewModel = biometricViewModel,
                 onAuthSuccess = {
@@ -75,7 +116,17 @@ fun SetupNavGraph(
             )
         ) { backStackEntry ->
             val memoIdString = backStackEntry.arguments?.getString("memoId")
-            val memoId = if (memoIdString == "new") null else memoIdString?.toLongOrNull()
+            val memoId = when {
+                memoIdString == "new" -> null
+                memoIdString != null -> {
+                    memoIdString.toLongOrNull() ?: run {
+                        // 不正なIDの場合はログに記録して新規作成モードに
+                        android.util.Log.w("NavGraph", "Invalid memoId: $memoIdString")
+                        null
+                    }
+                }
+                else -> null
+            }
 
             MemoEditScreen(
                 memoViewModel = memoViewModel,
@@ -90,6 +141,7 @@ fun SetupNavGraph(
         composable(route = Screen.Settings.route) {
             SettingsScreen(
                 biometricViewModel = biometricViewModel,
+                themeViewModel = themeViewModel,
                 onNavigateBack = {
                     navController.popBackStack()
                 }

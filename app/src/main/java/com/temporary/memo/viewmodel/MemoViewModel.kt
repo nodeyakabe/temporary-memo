@@ -48,11 +48,12 @@ class MemoViewModel(private val repository: MemoRepository) : ViewModel() {
      *
      * @param text メモ本文
      * @param durationHours 期限（時間単位）
+     * @return 作成成功時true
      */
-    fun createMemo(text: String, durationHours: Int) {
-        if (text.isBlank()) return
+    suspend fun createMemo(text: String, durationHours: Int): Boolean {
+        if (text.isBlank()) return false
 
-        viewModelScope.launch {
+        return try {
             val now = System.currentTimeMillis()
             val deleteAt = now + TimeUnit.HOURS.toMillis(durationHours.toLong())
 
@@ -63,6 +64,10 @@ class MemoViewModel(private val repository: MemoRepository) : ViewModel() {
             )
 
             repository.insert(memo)
+            true
+        } catch (e: Exception) {
+            android.util.Log.e("MemoViewModel", "Failed to create memo", e)
+            false
         }
     }
 
@@ -72,23 +77,24 @@ class MemoViewModel(private val repository: MemoRepository) : ViewModel() {
      * @param memoId メモID
      * @param newText 新しい本文
      * @param newDurationHours 新しい期限（時間単位）
+     * @return 更新成功時true
      */
-    fun updateMemo(memoId: Long, newText: String, newDurationHours: Int) {
-        if (newText.isBlank()) return
+    suspend fun updateMemo(memoId: Long, newText: String, newDurationHours: Int): Boolean {
+        if (newText.isBlank()) return false
 
-        viewModelScope.launch {
-            val existingMemo = repository.getMemoById(memoId)
-            if (existingMemo != null) {
-                val now = System.currentTimeMillis()
-                val newDeleteAt = now + TimeUnit.HOURS.toMillis(newDurationHours.toLong())
+        return try {
+            val now = System.currentTimeMillis()
+            val newDeleteAt = now + TimeUnit.HOURS.toMillis(newDurationHours.toLong())
 
-                val updatedMemo = existingMemo.copy(
-                    text = newText.trim(),
-                    deleteAt = newDeleteAt
-                )
-
-                repository.update(updatedMemo)
+            // 競合状態を回避するため、直接更新クエリを使用
+            val success = repository.updateMemoDirect(memoId, newText.trim(), newDeleteAt)
+            if (!success) {
+                android.util.Log.w("MemoViewModel", "Failed to update memo $memoId - may have been deleted")
             }
+            success
+        } catch (e: Exception) {
+            android.util.Log.e("MemoViewModel", "Failed to update memo", e)
+            false
         }
     }
 
@@ -115,6 +121,22 @@ class MemoViewModel(private val repository: MemoRepository) : ViewModel() {
      */
     suspend fun getMemoById(memoId: Long): MemoEntity? {
         return repository.getMemoById(memoId)
+    }
+
+    /**
+     * 編集中メモIDを設定（自動削除から保護）
+     */
+    fun setEditingMemoId(memoId: Long?) {
+        repository.setEditingMemoId(memoId)
+    }
+
+    /**
+     * 削除したメモを復元（Undo用）
+     */
+    fun restoreMemo(memo: MemoEntity) {
+        viewModelScope.launch {
+            repository.insert(memo)
+        }
     }
 }
 

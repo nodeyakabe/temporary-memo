@@ -16,3 +16,7 @@ gradle.properties
 *.keystore
 *.jks
 keystore.properties
+
+# APK files
+*.apk
+app/release/

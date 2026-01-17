@@ -29,28 +29,76 @@ private val LightColorScheme = lightColorScheme(
     background = LightBackground
 )
 
+private val OrangeColorScheme = lightColorScheme(
+    primary = OrangePrimary,
+    secondary = OrangeSecondary,
+    tertiary = OrangeTertiary,
+    background = OrangeBackground,
+    surface = OrangeSurface,
+    surfaceVariant = OrangeSurfaceVariant,
+    onPrimary = OrangeOnPrimary,
+    onSecondary = OrangeOnSecondary,
+    onBackground = OrangeOnBackground,
+    onSurface = OrangeOnSurface
+)
+
+private val BlueColorScheme = lightColorScheme(
+    primary = BluePrimary,
+    secondary = BlueSecondary,
+    tertiary = BlueTertiary,
+    background = BlueBackground,
+    surface = BlueSurface,
+    surfaceVariant = BlueSurfaceVariant,
+    onPrimary = BlueOnPrimary,
+    onSecondary = BlueOnSecondary,
+    onBackground = BlueOnBackground,
+    onSurface = BlueOnSurface
+)
+
 @Composable
 fun TemporaryMemoTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    themeType: String = "dark",
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+    val colorScheme = when (themeType) {
+        "dark" -> {
+            // ダークモード: システムのデフォルトダーク
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                dynamicDarkColorScheme(LocalContext.current)
+            } else {
+                DarkColorScheme
+            }
         }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        "light" -> {
+            // 白地: システムのデフォルトライト
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                dynamicLightColorScheme(LocalContext.current)
+            } else {
+                LightColorScheme
+            }
+        }
+        "orange" -> OrangeColorScheme
+        "blue" -> BlueColorScheme
+        else -> {
+            // デフォルトはダークテーマ
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                dynamicDarkColorScheme(LocalContext.current)
+            } else {
+                DarkColorScheme
+            }
+        }
     }
+
+    val isDark = themeType == "dark"
 
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            val activity = view.context as? Activity
+            activity?.window?.let { window ->
+                window.statusBarColor = colorScheme.primary.toArgb()
+                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isDark
+            }
         }
     }
 

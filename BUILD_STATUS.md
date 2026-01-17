@@ -1,6 +1,7 @@
 # ビルド状況と残タスク
 
 **作成日**: 2026-01-16
+**最終更新**: 2026-01-18
 **プロジェクト**: 一時保存メモ（Temporary Memo）
 
 ---
@@ -36,77 +37,42 @@
    - KAPT用のJVMエクスポート設定追加
    - `HorizontalDivider` → `Divider` に修正
 
-5. **アイコン準備**
-   - アプリアイコン画像作成済み（青色、砂時計・メモ・時計・盾のデザイン）
-   - 場所: `C:\Users\User\Downloads\S__22003714.jpg`
+5. **アイコン設定完了**
+   - アプリアイコン画像作成済み
+   - 各解像度のmipmapフォルダに設定完了
+
+6. **リリースビルド成功** ✅
+   - Android Studioでリリースビルド完了
+   - 出力先: `app/build/outputs/apk/release/app-release.apk`
+   - ビルド日時: 2026-01-18
 
 ---
 
-## ⚠️ 現在のブロッカー
+## ✅ 解決済みの問題
 
-### 1. ビルドエラー: JDK Image Transform 失敗
+### 1. ビルドエラー: JDK Image Transform 失敗 → 解決済み
+- Android Studio Invalidate Caches で解決
 
-**エラー内容**:
-```
-Execution failed for task ':app:compileDebugJavaWithJavac'.
-> Could not resolve all files for configuration ':app:androidJdkImage'.
-   > Failed to transform core-for-system-modules.jar
-```
-
-**原因**:
-- Gradle 8.7 と Java 21 の組み合わせで `jlink` が失敗
-- Android Studio の JDK とシステムの互換性問題
-
-**試した対策**:
-- ✅ `org.gradle.java.installations.auto-download=false` を追加
-- ⏳ Invalidate Caches 実行予定
-
-**次の対策候補**:
-1. Android Studio の Invalidate Caches を実行（推奨）
-2. `C:\Users\User\.gradle\caches\transforms-4` フォルダを削除
-3. Gradle 8.10 へのアップグレード検討
-
-### 2. アプリアイコン未設定
-
-**エラー内容**:
-```
-ERROR: resource mipmap/ic_launcher not found
-```
-
-**原因**:
-- `app/src/main/res/mipmap-*` フォルダにアイコンファイルが存在しない
-
-**解決方法**:
-Android Studioで以下を実行:
-1. `app` フォルダを右クリック
-2. New > Image Asset
-3. Launcher Icons を選択
-4. 既存の画像 (`S__22003714.jpg` の左側) を使用
-5. または一時的にデフォルトアイコンを生成
+### 2. アプリアイコン未設定 → 解決済み
+- Image Asset で設定完了
 
 ---
 
 ## 📋 残りの必須タスク
 
-### Phase 1: ビルド環境の修正（最優先）
+### Phase 1: ビルド環境の修正 ✅ 完了
 
-- [ ] **Android Studio Invalidate Caches 実行**
-  - File > Invalidate Caches > Invalidate and Restart
+- [x] **Android Studio Invalidate Caches 実行** ✅
+- [x] **アプリアイコン設定** ✅
+- [x] **リリースAPKのビルド成功** ✅
+  - 出力先: `app/build/outputs/apk/release/app-release.apk`
 
-- [ ] **アプリアイコン設定**
-  - 方法A: Image Asset で既存画像を使用
-  - 方法B: 一時的にデフォルトアイコンを生成
-
-- [ ] **AABファイルのビルド成功**
-  - Build > Generate Signed Bundle / APK
-  - キーストア情報入力
+- [ ] **AABファイルのビルド（Play Store用）**
+  - Build > Generate Signed Bundle / APK > Android App Bundle
   - 生成場所: `app/build/outputs/bundle/release/app-release.aab`
 
-- [ ] **ProGuard mapping.txt の確認**
-  - 場所: `app/build/outputs/mapping/release/mapping.txt`
-
 - [ ] **キーストアファイルのバックアップ**
-  - 生成場所: `temporary-memo-release.keystore`
+  - ファイル: `poimemo-release.keystore`
   - バックアップ先: USBメモリ、クラウドストレージ等
 
 ### Phase 2: Play Console設定（AABビルド後）
@@ -214,14 +180,15 @@ Validity: 25年
 
 ## 📈 進捗状況
 
-**全体進捗**: 約70%完了
+**全体進捗**: 約80%完了
 
 - ✅ アプリ開発: 100%
 - ✅ UI/UX改善: 100%
 - ✅ プライバシーポリシー: 100%
 - ✅ ストア情報準備: 100%
-- ⚠️ ビルド環境: 90%（エラー修正中）
-- ⏳ AABビルド: 0%
+- ✅ ビルド環境: 100%
+- ✅ リリースAPKビルド: 100%
+- ⏳ AABビルド: 0%（Play Store用）
 - ⏳ スクリーンショット: 0%
 - ⏳ Play Console設定: 0%
 - ⏳ 審査提出: 0%
@@ -230,11 +197,10 @@ Validity: 25年
 
 ## 🎯 次にやること
 
-1. **今すぐ**: Android Studio で Invalidate Caches 実行
-2. **再起動後**: アプリアイコン設定（Image Asset）
-3. **アイコン設定後**: AABビルド実行
-4. **ビルド成功後**: キーストアのバックアップ
-5. **その後**: スクリーンショット撮影
+1. **キーストアのバックアップ**: `poimemo-release.keystore` を安全な場所に保存
+2. **AABビルド**: Play Store提出用のAABファイルを生成
+3. **スクリーンショット撮影**: アプリの各画面を撮影
+4. **Play Console登録**: アプリ情報を入力して審査提出
 
 ---
 

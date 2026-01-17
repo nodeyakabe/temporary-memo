@@ -41,7 +41,8 @@ object TimeUtils {
                     "あと${hours}時間"
                 }
             }
-            else -> "あと${minutes}分"
+            minutes > 0 -> "あと${minutes}分"
+            else -> "まもなく削除"  // 1分未満の場合
         }
     }
 

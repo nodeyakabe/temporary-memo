@@ -2,6 +2,7 @@ package com.temporary.memo.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.temporary.memo.widget.WidgetUpdateHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,13 +12,13 @@ import kotlinx.coroutines.flow.asStateFlow
  *
  * 生体認証の状態管理とSharedPreferencesへの設定保存。
  */
-class BiometricViewModel(context: Context) : ViewModel() {
+class BiometricViewModel(private val context: Context) : ViewModel() {
 
     private val prefs = context.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
 
     companion object {
         private const val KEY_BIOMETRIC_ENABLED = "biometric_enabled"
-        private const val DEFAULT_BIOMETRIC_ENABLED = true
+        private const val DEFAULT_BIOMETRIC_ENABLED = false
     }
 
     private val _biometricEnabled = MutableStateFlow(
@@ -34,6 +35,8 @@ class BiometricViewModel(context: Context) : ViewModel() {
     fun setBiometricEnabled(enabled: Boolean) {
         _biometricEnabled.value = enabled
         prefs.edit().putBoolean(KEY_BIOMETRIC_ENABLED, enabled).apply()
+        // ウィジェットを更新してセキュリティ設定を反映
+        WidgetUpdateHelper.updateWidgets(context)
     }
 
     /**

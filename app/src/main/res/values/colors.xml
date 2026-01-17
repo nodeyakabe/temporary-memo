@@ -13,4 +13,10 @@
     <color name="time_yellow">#FFFFB300</color>
     <color name="time_orange">#FFFF6F00</color>
     <color name="time_red">#FFF44336</color>
+
+    <!-- Widget Colors -->
+    <color name="widget_text_primary">#FF212121</color>
+    <color name="widget_text_secondary">#FF757575</color>
+    <color name="widget_background">#FFFFFFFF</color>
+    <color name="widget_divider">#FFE0E0E0</color>
 </resources>

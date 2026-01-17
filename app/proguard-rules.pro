@@ -31,3 +31,17 @@
 -keep class kotlinx.coroutines.** { *; }
 -keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
 -keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
+
+# Widget support
+-keep class * extends android.appwidget.AppWidgetProvider { *; }
+-keep class com.temporary.memo.widget.** { *; }
+-keepclassmembers class com.temporary.memo.widget.MemoWidgetReceiver {
+    public <init>();
+    public void onUpdate(android.content.Context, android.appwidget.AppWidgetManager, int[]);
+}
+
+# RemoteViews support
+-keep class android.widget.RemoteViews { *; }
+-keepclassmembers class * {
+    public <init>(android.content.Context, int);
+}

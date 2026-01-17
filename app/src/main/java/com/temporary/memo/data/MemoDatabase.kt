@@ -14,7 +14,7 @@ import androidx.room.RoomDatabase
 @Database(
     entities = [MemoEntity::class],
     version = 1,
-    exportSchema = false
+    exportSchema = true  // スキーマエクスポートを有効化（将来のマイグレーション用）
 )
 abstract class MemoDatabase : RoomDatabase() {
     abstract fun memoDao(): MemoDao
